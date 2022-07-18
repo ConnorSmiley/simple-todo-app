@@ -5,6 +5,10 @@ import postsReducer from "../redux/features/postSlice"
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
-    posts: postsReducer
+    posts: postsReducer,
+
   }
 })
+
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch

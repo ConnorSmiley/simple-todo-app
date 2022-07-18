@@ -47,7 +47,7 @@ const MappedStyles = styled.div`
 const ListStyles = styled.div`
   ${tw`
   text-white
-  text-2xl 
+      text-2xl 
   uppercase
   font-extrabold
     
