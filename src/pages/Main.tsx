@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
 
@@ -23,7 +23,7 @@ const MainStyle = styled.div`
 
 
 const Input = styled.input`
-    ${tw`
+  ${tw`
     w-full
     h-10
     rounded-sm
@@ -36,10 +36,10 @@ const Input = styled.input`
     placeholder:text-sm
     placeholder:pl-10
     `}
-`
+`;
 
-const Title = styled.div`
-    ${tw`
+const Title = styled.input`
+  ${tw`
     h-10
     flex
     items-center
@@ -47,21 +47,59 @@ const Title = styled.div`
     uppercase
     font-extrabold
     text-2xl
+    text-black
     
+    `}
+`;
+
+const NoNote = styled.div`
+    ${tw`
+    w-full
+    h-auto
+    bg-[#1a1a1a]
+    text-[#3a3a3a]
+    font-extrabold
+    uppercase
+    p-7
+    text-8xl
+    items-center
+    flex
+    justify-center
     
     `}
 `
 
-export default function Main() {
+
+export default function Main({ activeNote, onUpdateNote }) {
+  const [mainNote, setMainNote] = useState([])
+
+  const onEditField = (key, value) => {
+    onUpdateNote({
+      ...activeNote,
+      [key]:value,
+      body: "",
+      lastModified: Date.now()
+    });
+  };
+
+  if (!activeNote) {
+    return <NoNote>Add a Note</NoNote>
+  }
 
   return (
     <>
       <MainContainer>
         <MainStyle>
-          <Title>Title here</Title>
+          <Title
+            input="text"
+            value={activeNote.title}
+            onChange={(e) => onEditField("title", e.target.value)}
+            name="title"
+            id="title"
+          />
           <Input
-          placeholder="add here"
-
+            placeholder="add here"
+            onChange={(e) => onEditField("content", e.target.value)}
 
           />
 

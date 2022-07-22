@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
 import Sidebar from "@/pages/Sidebar";
@@ -42,14 +42,29 @@ const IndexPage: NextPage = () => {
       id: nanoid(),
       title: "Untitled Note",
       body: "",
-      lastModified: Date.now(),
+      lastModified: Date.now()
     };
-    setNotes([newNotes, ...notes])
+    setNotes([newNotes, ...notes]);
   };
 
   const deleteNote = (idToDelete) => {
-    setNotes(notes.filter((note)=> note.id !== idToDelete))
-  }
+    setNotes(notes.filter((note) => note.id !== idToDelete));
+  };
+
+  const getActiveNote = () => {
+    return notes.find((note) => note.id === activeNote);
+  };
+
+  const onUpdateNote = (updatedNote) => {
+    const updatedNotesArray = notes.map(note => {
+      if (note.id === activeNote) {
+        return updatedNote;
+      } else {
+        return note;
+      }
+    });
+    setNotes(updatedNotesArray);
+  };
 
   return (
     <>
@@ -65,7 +80,12 @@ const IndexPage: NextPage = () => {
             activeNote={activeNote}
             setActiveNote={setActiveNote}
           />
-          <Main />
+          <Main
+            activeNote={getActiveNote()}
+            notes={notes}
+            setNotes={setNotes}
+          onUpdateNote={onUpdateNote}
+          />
         </MainContainer>
       </HomeContainer>
     </>
