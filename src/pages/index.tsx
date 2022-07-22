@@ -34,6 +34,8 @@ const MainContainer = styled.div`
 
 const IndexPage: NextPage = () => {
   const [notes, setNotes] = useState([]);
+  const [activeNote, setActiveNote] = useState(false);
+
 
   const addNotes = () => {
     const newNotes = {
@@ -45,6 +47,10 @@ const IndexPage: NextPage = () => {
     setNotes([newNotes, ...notes])
   };
 
+  const deleteNote = (idToDelete) => {
+    setNotes(notes.filter((note)=> note.id !== idToDelete))
+  }
+
   return (
     <>
       <HomeContainer>
@@ -52,7 +58,13 @@ const IndexPage: NextPage = () => {
           <Navbar />
         </HomeStyles>
         <MainContainer>
-          <Sidebar notes={notes} addNotes={addNotes} />
+          <Sidebar
+            notes={notes}
+            addNotes={addNotes}
+            deleteNote={deleteNote}
+            activeNote={activeNote}
+            setActiveNote={setActiveNote}
+          />
           <Main />
         </MainContainer>
       </HomeContainer>

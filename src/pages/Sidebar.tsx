@@ -28,12 +28,20 @@ const SidebarStyles = styled.div`
 const NoteSidebarHeader = styled.div`
   ${tw`
     flex
+    flex-row
     items-center
     justify-between
     w-full
     bg-black
     h-16
     p-6
+    
+    `}
+`;
+
+const Button = styled.button`
+  ${tw`
+    text-blue-500
     
     `}
 `;
@@ -47,24 +55,16 @@ const H1 = styled.h1`
     items-center
     
     hover:bg-[#141414]
-    
-    `}
-`;
-
-const Button = styled.button`
-  ${tw`
-    text-blue-500
-    
-    
     `}
 `;
 
 
 const NotesAddedContainer = styled.div`
+  background-color: ${props => props.activeNote === props.id ? "#3f3f3f" : null};
   ${tw`
     flex
+    w-full
     justify-between
-    bg-[#141414]
     h-20
     pl-5
     pr-3
@@ -72,7 +72,7 @@ const NotesAddedContainer = styled.div`
     items-center
     
     hover:bg-black
-    
+    hover:cursor-pointer
     `}
 `;
 
@@ -120,8 +120,8 @@ const TimeContainer = styled.small`
     `}
 `;
 
-export default function Sidebar({ notes, addNotes }) {
 
+export default function Sidebar({ notes, addNotes, deleteNote, setActiveNote, activeNote }) {
 
   return (
     <>
@@ -131,31 +131,35 @@ export default function Sidebar({ notes, addNotes }) {
             <H1>Notes</H1>
             <Button onClick={addNotes}>Add</Button>
           </NoteSidebarHeader>
+
           {notes.map(note => (
-            <>
-              <NotesAddedContainer>
-                <NotesAddedStyles>
-                  <H1>{note.title}</H1>
+            <NotesAddedContainer
+              id={note.id}
+              activeNote={activeNote}
+              onClick={() => {
+                setActiveNote(note.id);
+              }}
+              key={note.id}
+            >
+              <NotesAddedStyles>
+                <H1>{note.title}</H1>
 
-                  <DateContainer>{new Date(note.lastModified).toLocaleDateString("en-KR")}
-                  </DateContainer>
-
-
-                </NotesAddedStyles>
-                <Dates>
-                  <Delete>delete</Delete>
-                  <TimeContainer>{new Date(note.lastModified).toLocaleTimeString("en-kr", {
-                    hour: "numeric",
-                    minute: "numeric"
-                  })}
-                  </TimeContainer>
-                </Dates>
-              </NotesAddedContainer>
-            </>
+                <DateContainer>{new Date(note.lastModified).toLocaleDateString("en-KR")}
+                </DateContainer>
+              </NotesAddedStyles>
+              <Dates>
+                <Delete onClick={() => deleteNote(note.id)}>delete</Delete>
+                <TimeContainer>{new Date(note.lastModified).toLocaleTimeString("en-kr", {
+                  hour: "numeric",
+                  minute: "numeric"
+                })}
+                </TimeContainer>
+              </Dates>
+            </NotesAddedContainer>
           ))}
+
         </SidebarStyles>
       </SidebarContainer>
     </>
   );
 }
-
