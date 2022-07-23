@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
 import Sidebar from "@/pages/Sidebar";
@@ -84,7 +84,7 @@ const IndexPage: NextPage = () => {
             activeNote={getActiveNote()}
             notes={notes}
             setNotes={setNotes}
-          onUpdateNote={onUpdateNote}
+            onUpdateNote={onUpdateNote}
           />
         </MainContainer>
       </HomeContainer>

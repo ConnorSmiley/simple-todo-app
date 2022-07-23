@@ -142,7 +142,7 @@ export default function Sidebar({ notes, addNotes, deleteNote, setActiveNote, ac
               key={note.id}
             >
               <NotesAddedStyles>
-                <H1>{note.title}</H1>
+                <H1>{note.title.substr(0, 15)}</H1>
 
                 <DateContainer>{new Date(note.lastModified).toLocaleDateString("en-KR")}
                 </DateContainer>
