@@ -121,7 +121,11 @@ const AddNote = styled.div`
   rounded-md
   bg-[#141414]
   text-white
-  text-xl
+  text-lg
+  flex
+  items-center
+  pl-14
+  text-blue-500
     
     `}
 `;
@@ -131,6 +135,7 @@ export default function Main({ activeNote, onUpdateNote }) {
   const [mainNote, setMainNote] = useState([]);
   const [textContent, useTextContent] = useState([]);
 
+
   const addMainNotes = () => {
     const newMainNotes = {
       id: nanoid(),
@@ -139,7 +144,6 @@ export default function Main({ activeNote, onUpdateNote }) {
     setMainNote([newMainNotes, ...mainNote]);
   };
 
-    console.log(mainNote)
 
   const onEditField = (key, value) => {
     onUpdateNote({
