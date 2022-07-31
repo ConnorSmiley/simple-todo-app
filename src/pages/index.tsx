@@ -6,6 +6,7 @@ import Sidebar from "@/pages/Sidebar";
 import Navbar from "@/components/Navbar";
 import Main from "@/pages/Main";
 import { nanoid } from "@reduxjs/toolkit";
+import Main2 from "@/pages/Main2";
 
 const HomeContainer = styled.div`
   ${tw`
@@ -35,6 +36,7 @@ const MainContainer = styled.div`
 const IndexPage: NextPage = () => {
   const [notes, setNotes] = useState([]);
   const [activeNote, setActiveNote] = useState(false);
+  const [addedNotes, setAddedNotes] = useState([]);
 
 
   const addNotes = () => {
@@ -66,6 +68,13 @@ const IndexPage: NextPage = () => {
     setNotes(updatedNotesArray);
   };
 
+  if (notes && notes[0]) {
+    console.log(notes[0].id);
+  }
+
+  console.log(notes);
+
+
   return (
     <>
       <HomeContainer>
@@ -79,12 +88,16 @@ const IndexPage: NextPage = () => {
             deleteNote={deleteNote}
             activeNote={activeNote}
             setActiveNote={setActiveNote}
+            required
           />
-          <Main
+
+          <Main2
             activeNote={getActiveNote()}
             notes={notes}
             setNotes={setNotes}
             onUpdateNote={onUpdateNote}
+            addedNotes={addedNotes}
+            id={notes.id}
           />
         </MainContainer>
       </HomeContainer>
@@ -93,3 +106,8 @@ const IndexPage: NextPage = () => {
 };
 
 export default IndexPage;
+
+//  if (notes && notes[0]) {
+//   console.log(notes[0].id)}
+//
+//   console.log(notes)

@@ -81,7 +81,6 @@ const NotesAddedStyles = styled.div`
   flex
   flex-col
   space-y-2
-  
     `}
 `;
 
@@ -89,7 +88,6 @@ const Delete = styled.button`
   ${tw`
     text-red-500
     text-xs
-    
     `}
 `;
 
@@ -100,7 +98,6 @@ const Dates = styled.div`
     flex-col
     space-y-3
     pt-2
-    
     `}
 `;
 
@@ -108,7 +105,6 @@ const DateContainer = styled.small`
   ${tw`
     text-xs
     flex
-    
     `}
 `;
 
@@ -116,12 +112,11 @@ const TimeContainer = styled.small`
   ${tw`
     text-xs
     flex
-    
     `}
 `;
 
 
-export default function Sidebar({ notes, addNotes, deleteNote, setActiveNote, activeNote }) {
+export default function Sidebar({ notes, addNotes, deleteNote, setActiveNote, addMainNotes }) {
 
   return (
     <>
@@ -129,20 +124,19 @@ export default function Sidebar({ notes, addNotes, deleteNote, setActiveNote, ac
         <SidebarStyles>
           <NoteSidebarHeader>
             <H1>Notes</H1>
-            <Button onClick={addNotes}>Add</Button>
+            <Button onClick={()=> {addNotes()}}>Add</Button>
           </NoteSidebarHeader>
 
           {notes.map(note => (
             <NotesAddedContainer
               id={note.id}
-              activeNote={activeNote}
               onClick={() => {
                 setActiveNote(note.id);
               }}
               key={note.id}
             >
               <NotesAddedStyles>
-                <H1>{note.title.substr(0, 15)}</H1>
+                <H1>{note.title.substring(0, 15)}</H1>
 
                 <DateContainer>{new Date(note.lastModified).toLocaleDateString("en-KR")}
                 </DateContainer>

@@ -1,24 +1,23 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
-import addIcon from "images/AddSign.svg";
-import circle2 from "images/circle2.svg";
+import addIcon from "@/images/AddSign.svg";
+import circle2 from "@/images/circle2.svg";
 
-const MainContainer = styled.div`
+const Main2Container = styled.div`
   ${tw`
-  bg-[#1a1a1a]
+    bg-[#1a1a1a]
   w-full
   h-auto
     
     `}
 `;
 
-const MainStyle = styled.div`
+const Main2Style = styled.div`
   ${tw`
-  flex
+     flex
   flex-col
-  p-6
-    
+  p-6 
     `}
 `;
 
@@ -141,14 +140,17 @@ const Circle2 = styled(circle2)`
 `;
 
 
-export default function Main({ activeNote, onUpdateNote, notes }) {
+export interface IMain2Props {
+
+}
+
+const Main2: React.FunctionComponent<IMain2Props> = ({ activeNote, onUpdateNote, notes, setNotes }) => {
   const [mainNote, setMainNote] = useState([]);
   const [textContent, setTextContent] = useState([]);
-
+  const [fieldValue, setFieldValue] = useState(true);
 
   const addMainNotes = () => {
     const newMainNotes = {
-      id: notes.id,
       content: textContent
     };
     setMainNote([newMainNotes, ...mainNote]);
@@ -179,13 +181,16 @@ export default function Main({ activeNote, onUpdateNote, notes }) {
   };
 
   const AddMainNotesLogic = () => {
-    textContent.length !== 0 ? addMainNotes() : null;
+    addMainNotes()
   };
+
+  console.log(notes);
 
   return (
     <>
-      <MainContainer>
-        <MainStyle>
+
+      <Main2Container>
+        <Main2Style>
           <Title
             input="text"
             value={activeNote.title}
@@ -202,7 +207,7 @@ export default function Main({ activeNote, onUpdateNote, notes }) {
               />
               <Input
                 placeholder="Add Task"
-                value={mainNote.content}
+                value={notes.body}
                 name="content"
                 id={notes.id}
                 onChange={handleChangeContent}
@@ -212,17 +217,17 @@ export default function Main({ activeNote, onUpdateNote, notes }) {
           </InputContainer>
 
           <div>
-            {mainNote.map(mainNote =>
-              <AddNote key={notes.id}>
-                <Circle2 />
-                {mainNote.content}
-              </AddNote>
-            )}
+            {notes.map(content =>
+                <AddNote key={content.id}>
+                  <Circle2 />
+                  {content.body}
+                </AddNote> )}
           </div>
 
-        </MainStyle>
-      </MainContainer>
-       ))}
+        </Main2Style>
+      </Main2Container>
     </>
   );
-}
+};
+
+export default Main2;
